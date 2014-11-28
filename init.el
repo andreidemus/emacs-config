@@ -44,6 +44,21 @@
 (setq cursor-type '(bar . 2))
 ;(require 'color-theme)
 ;(color-theme-initialize)
+;;(load-theme 'mccarthy t)
+;;(load-theme 'solarized-dark t)
+;; (custom-theme-set-faces
+;;  `zenburn
+;;  `(git-gutter:added ((t (:foreground "#90ee90" :weight bold :inverse-video t))))
+;;  `(git-gutter:modified ((t (:foreground "#a6a6a6" :weight bold :inverse-video t))))
+;;  `(git-gutter:deleted ((t (:foreground "#fa8072" :weight bold :inverse-video t))))
+;;  `(show-paren-match ((t (:background "#5F5F5F"))))
+;;  `(whitespace-space ((t (:foreground "#5F5F5F"))))
+;;  `(whitespace-hspace ((t (:foreground "#5F5F5F"))))
+;;  `(region ((t (:foreground "#FFF" :background "#4C7073")))))
+(scroll-bar-mode -1)
+;; (set-face-attribute 'mode-line nil  :height 120)
+(set-face-attribute 'mode-line nil  :box nil)
+
 
 (electric-pair-mode 1)
 (show-paren-mode 1)
@@ -55,8 +70,6 @@
 ;;     (setq exec-path (split-string path-from-shell path-separator))))
 
 ;; (when window-system (set-exec-path-from-shell-PATH))
-
-;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; fix the PATH variable
 (when (memq window-system '(mac ns))
@@ -74,3 +87,16 @@
 
 (delete-selection-mode 1)
 (global-git-gutter-mode +1)
+(scroll-bar-mode -1)
+;; (set-face-attribute 'mode-line nil  :height 120)
+(set-face-attribute 'mode-line nil  :box nil)
+
+;; scroll one line at a time (less "jumpy" than defaults)
+;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+(setq mouse-wheel-scroll-amount '(0.07))
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+(global-set-key "\M-f" "\C-u1\C-v")
+(global-set-key "\M-b" "\C-u1\M-v")
