@@ -1,10 +1,12 @@
 (package-initialize)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives '(
+			 ;; ("gnu" . "http://elpa.gnu.org/packages/") 
+                         ;; ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+			 ))
 
-(unless (package-installed-p 'cider)
-  (package-install 'cider))
+;; (unless (package-installed-p 'cider)
+;;   (package-install 'cider))
 
 (setq ring-bell-function 'ignore)
 (set-keyboard-coding-system nil)
@@ -14,7 +16,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-; '(electric-pair-pairs (quote ((39 . 39) (40 . 41) (91 . 93) (34 . 34))))
+ '(custom-safe-themes (quote ("1a85b8ade3d7cf76897b338ff3b20409cb5a5fbed4e45c6f38c98eee7b025ad4" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "a233249cc6f90098e13e555f5f5bf6f8461563a8043c7502fb0474be02affeea" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "7bde52fdac7ac54d00f3d4c559f2f7aa899311655e7eb20ec5491f3b5c533fe8" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" default)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -26,20 +28,6 @@
 (defun new-buffer ()
   (interactive)
   (switch-to-buffer (generate-new-buffer "new-buffer")))
-
-(global-set-key (kbd "M-<up>") 'scroll-up-line)
-(global-set-key (kbd "M-<down>") 'scroll-down-line)
-(global-set-key (kbd "C-;") 'comment-dwim)
-(global-set-key (kbd "C-/") 'comment-dwim)
-(global-set-key (kbd "s-/") 'comment-dwim)
-(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
-(global-set-key (kbd "s-<left>") 'move-beginning-of-line)
-(global-set-key (kbd "s-<right>") 'move-end-of-line)
-(global-set-key (kbd "s-1") 'buffer-menu)
-(global-set-key (kbd "C-<tab>") 'other-window)
-(global-set-key (kbd "s-w") 'kill-this-buffer)
-(global-set-key (kbd "s-o") 'find-file)
-(global-set-key (kbd "s-n") 'new-buffer)
 
 (setq cursor-type '(bar . 2))
 ;(require 'color-theme)
@@ -98,5 +86,44 @@
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-(global-set-key "\M-f" "\C-u1\C-v")
-(global-set-key "\M-b" "\C-u1\M-v")
+;; window size on start
+;; (set-frame-size (selected-frame) 202 56)
+
+;; (require 'tramp)
+;; (setq tramp-default-method "ssh")
+;;(setq scroll-preserve-screen-position t)
+
+(desktop-save-mode t)
+
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; neotree
+(require 'neotree)
+(setq neo-smart-open t)`
+(setq neo-theme 'arrow)
+;; (global-set-key [f8] 'neotree-toggle)
+
+(global-set-key (kbd "M-<up>") 'scroll-up-line)
+(global-set-key (kbd "M-<down>") 'scroll-down-line)
+(global-set-key (kbd "C-;") 'comment-dwim)
+(global-set-key (kbd "C-/") 'comment-dwim)
+(global-set-key (kbd "s-/") 'comment-dwim)
+(global-set-key (kbd "RET") 'reindent-then-newline-and-indent)
+(global-set-key (kbd "s-<left>") 'move-beginning-of-line)
+(global-set-key (kbd "s-<right>") 'move-end-of-line)
+
+(global-set-key (kbd "s-1") 'neotree-toggle)
+(global-set-key (kbd "s-e") 'buffer-menu)
+(global-set-key (kbd "C-<tab>") 'other-window)
+(global-set-key (kbd "s-w") 'kill-this-buffer)
+(global-set-key (kbd "s-o") 'find-file)
+(global-set-key (kbd "s-n") 'new-buffer)
+(global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
+(global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
+
+;; (global-set-key (kbd "s-<up>") 'scroll-up-command)
+;; (global-set-key (kbd "s-<down>") 'scroll-down-command)
