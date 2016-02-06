@@ -1,6 +1,6 @@
 (package-initialize)
 (setq package-archives '(
-			 ;; ("gnu" . "http://elpa.gnu.org/packages/") 
+			 ("gnu" . "http://elpa.gnu.org/packages/") 
                          ;; ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
 			 ))
@@ -60,8 +60,8 @@
 ;; (when window-system (set-exec-path-from-shell-PATH))
 
 ;; fix the PATH variable
-;; (when (memq window-system '(mac ns))
-;;   (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
 
 ;; autocompletion
 (global-company-mode)
@@ -105,7 +105,6 @@
 (require 'neotree)
 (setq neo-smart-open t)`
 (setq neo-theme 'arrow)
-;; (global-set-key [f8] 'neotree-toggle)
 
 (global-set-key (kbd "M-<up>") 'scroll-up-line)
 (global-set-key (kbd "M-<down>") 'scroll-down-line)
@@ -128,45 +127,44 @@
 ;; (global-set-key (kbd "s-<up>") 'scroll-up-command)
 ;; (global-set-key (kbd "s-<down>") 'scroll-down-command)
 
-;; *** From https://github.com/realworldocaml/book/wiki/Installation-Instructions
 ;; -- common-lisp compatibility if not added earlier in your .emacs
 (require 'cl)
-
-;; Tuareg
-(load "/Users/andrei/.opam/4.02.3/share/emacs/site-lisp/tuareg-site-file")
-(add-to-list 'load-path "/Users/andrei/.opam/4.02.3/share/emacs/site-lisp/")
-
-;; -- Tuareg mode -----------------------------------------
-;; Add Tuareg to your search path
-;; (add-to-list
-;;  'load-path
-;;  ;; Change the path below to be wherever you've put your tuareg installation.
-;;  (expand-file-name "~/lib/elisp/tuareg"))
-(require 'tuareg)
-(setq auto-mode-alist 
-      (append '(("\\.ml[ily]?$" . tuareg-mode))
-          auto-mode-alist))
 
 ;; -- Tweaks for OS X -------------------------------------
 ;; Tweak for problem on OS X where Emacs.app doesn't run the right
 ;; init scripts when invoking a sub-shell
-(cond
- ((eq window-system 'ns) ; macosx
-  ;; Invoke login shells, so that .profile or .bash_profile is read
-  (setq shell-command-switch "-lc")))
+;; (cond
+;;  ((eq window-system 'ns) ; macosx
+;;   ;; Invoke login shells, so that .profile or .bash_profile is read
+;;   (setq shell-command-switch "-lc")))
 
-;; -- opam and utop setup --------------------------------
-;; Setup environment variables using opam
-(dolist
-   (var (car (read-from-string
-           (shell-command-to-string "opam config env --sexp"))))
- (setenv (car var) (cadr var)))
+(dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
+  (setenv (car var) (cadr var)))
+
 ;; Update the emacs path
-(setq exec-path (split-string (getenv "PATH") path-separator))
+(setq exec-path (append (parse-colon-path (getenv "PATH"))
+                        (list exec-directory)))
+
+;;merlin
+(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
+(add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+(require 'merlin)
+
 ;; Update the emacs load path
-(push (concat (getenv "OCAML_TOPLEVEL_PATH")
-          "/../../share/emacs/site-lisp") load-path)
-;; Automatically load utop.el
+(add-to-list 'load-path (expand-file-name "../../share/emacs/site-lisp"
+                                          (getenv "OCAML_TOPLEVEL_PATH")))
+
+(setq auto-mode-alist
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+              auto-mode-alist)) 
+(add-hook 'tuareg-mode-hook 'utop-minor-mode)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+
+(autoload 'merlin-mode "merlin" "Merlin mode" t)
+(setq merlin-use-auto-complete-mode t)
+(setq merlin-error-after-save nil)
+(add-hook 'caml-mode-hook 'merlin-mode)
+
 (autoload 'utop "utop" "Toplevel for OCaml" t)
 (autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
-(add-hook 'tuareg-mode-hook 'utop-minor-mode)
