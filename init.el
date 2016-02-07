@@ -124,6 +124,8 @@
 (global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
 (global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
 
+(global-set-key [f8] 'merlin-error-check)
+
 ;; (global-set-key (kbd "s-<up>") 'scroll-up-command)
 ;; (global-set-key (kbd "s-<down>") 'scroll-down-command)
 
