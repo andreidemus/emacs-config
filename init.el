@@ -85,7 +85,10 @@
 (global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
 (global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
 
+(global-set-key (kbd "s-<return>") 'utop-eval-region)
 (global-set-key [f8] 'merlin-error-check)
+(global-set-key [f11] 'git-gutter:popup-diff)
+(global-set-key (kbd "C-<f11>") 'vc-diff)
 
 ;; -- common-lisp compatibility if not added earlier in your .emacs
 (require 'cl)
@@ -95,6 +98,8 @@
 (color-theme-initialize)
 (set-face-background 'default "#f7f7f7")
 (set-face-foreground 'default "#1a1a1a")
+;; (set-face-attribute 'mode-line nil :height 120) 
+(set-face-attribute 'vertical-border nil :foreground "grey")
 
 (require 'git-gutter)
 (global-git-gutter-mode +1)
@@ -106,10 +111,10 @@
 (setq git-gutter:deleted-sign " ")
 (set-face-background 'git-gutter:modified "#B4CDE1")
 (set-face-foreground 'git-gutter:modified "#B4CDE1")
-(set-face-background 'git-gutter:added "#90ee90")
-(set-face-foreground 'git-gutter:added "#90ee90")
-(set-face-background 'git-gutter:deleted "#fa8072")
-(set-face-foreground 'git-gutter:deleted "#fa8072")
+(set-face-background 'git-gutter:added "#9AD39A")
+(set-face-foreground 'git-gutter:added "#9AD39A")
+(set-face-background 'git-gutter:deleted "#F7A59C")
+(set-face-foreground 'git-gutter:deleted "#F7A59C")
 (setq git-gutter:unchanged-sign nil)
 (set-face-background 'git-gutter:unchanged nil)
 
