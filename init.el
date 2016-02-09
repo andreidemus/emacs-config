@@ -1,12 +1,4 @@
-(package-initialize)
-(setq package-archives '(
-			 ("gnu" . "http://elpa.gnu.org/packages/") 
-                         ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-			 ))
-
-;; (unless (package-installed-p 'cider)
-;;   (package-install 'cider))
+(load-file "~/.emacs.d/packages.el")
 
 (setq ring-bell-function 'ignore)
 (set-keyboard-coding-system nil)
@@ -23,41 +15,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(show-paren-match ((((class color) (background light)) (:background "#B4CDE1"))))
  )
 
 (defun new-buffer ()
   (interactive)
   (switch-to-buffer (generate-new-buffer "new-buffer")))
 
-(setq cursor-type '(bar . 2))
-;(require 'color-theme)
-;(color-theme-initialize)
-;;(load-theme 'mccarthy t)
-;;(load-theme 'solarized-dark t)
-;; (custom-theme-set-faces
-;;  `zenburn
-;;  `(git-gutter:added ((t (:foreground "#90ee90" :weight bold :inverse-video t))))
-;;  `(git-gutter:modified ((t (:foreground "#a6a6a6" :weight bold :inverse-video t))))
-;;  `(git-gutter:deleted ((t (:foreground "#fa8072" :weight bold :inverse-video t))))
-;;  `(show-paren-match ((t (:background "#5F5F5F"))))
-;;  `(whitespace-space ((t (:foreground "#5F5F5F"))))
-;;  `(whitespace-hspace ((t (:foreground "#5F5F5F"))))
-;;  `(region ((t (:foreground "#FFF" :background "#4C7073")))))
 (scroll-bar-mode -1)
-;; (set-face-attribute 'mode-line nil  :height 120)
 (set-face-attribute 'mode-line nil  :box nil)
-
 
 (electric-pair-mode 1)
 (show-paren-mode 1)
-
-;;fix path when run from X
-;; (defun set-exec-path-from-shell-PATH ()
-;;   (let ((path-from-shell (shell-command-to-string "TERM=vt100 $SHELL -i -c 'echo $PATH'")))
-;;     (setenv "PATH" path-from-shell)
-;;     (setq exec-path (split-string path-from-shell path-separator))))
-
-;; (when window-system (set-exec-path-from-shell-PATH))
 
 ;; fix the PATH variable
 (when (memq window-system '(mac ns))
@@ -74,37 +43,29 @@
 (add-hook 'sql-interactive-mode-hook 'sqlup-mode)
 
 (delete-selection-mode 1)
-(global-git-gutter-mode +1)
 (scroll-bar-mode -1)
 ;; (set-face-attribute 'mode-line nil  :height 120)
 (set-face-attribute 'mode-line nil  :box nil)
 
-;; scroll one line at a time (less "jumpy" than defaults)
-;;(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
-(setq mouse-wheel-scroll-amount '(0.07))
+(setq mouse-wheel-scroll-amount '(0.03))
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-;; window size on start
-;; (set-frame-size (selected-frame) 202 56)
-
-;; (require 'tramp)
-;; (setq tramp-default-method "ssh")
-;;(setq scroll-preserve-screen-position t)
-
 (desktop-save-mode t)
+
+;; neotree
+(require 'neotree)
+(setq-default neo-smart-open t)
+(setq-default neo-theme 'arrow)
+
+(load-file "~/.emacs.d/ocaml.el")
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; neotree
-(require 'neotree)
-(setq neo-smart-open t)`
-(setq neo-theme 'arrow)
 
 (global-set-key (kbd "M-<up>") 'scroll-up-line)
 (global-set-key (kbd "M-<down>") 'scroll-down-line)
@@ -126,47 +87,37 @@
 
 (global-set-key [f8] 'merlin-error-check)
 
-;; (global-set-key (kbd "s-<up>") 'scroll-up-command)
-;; (global-set-key (kbd "s-<down>") 'scroll-down-command)
-
 ;; -- common-lisp compatibility if not added earlier in your .emacs
 (require 'cl)
 
-;; -- Tweaks for OS X -------------------------------------
-;; Tweak for problem on OS X where Emacs.app doesn't run the right
-;; init scripts when invoking a sub-shell
-;; (cond
-;;  ((eq window-system 'ns) ; macosx
-;;   ;; Invoke login shells, so that .profile or .bash_profile is read
-;;   (setq shell-command-switch "-lc")))
+;; Color Theme
+(require 'color-theme)
+(color-theme-initialize)
+(set-face-background 'default "#f7f7f7")
+(set-face-foreground 'default "#1a1a1a")
 
-(dolist (var (car (read-from-string (shell-command-to-string "opam config env --sexp"))))
-  (setenv (car var) (cadr var)))
+(require 'git-gutter)
+(global-git-gutter-mode +1)
+(setq git-gutter:always-show-gutter t)
+(setq git-gutter:update-threshold 2)
+(setq git-gutter:update-hooks '(after-save-hook after-revert-hook))
+(setq git-gutter:modified-sign " ")
+(setq git-gutter:added-sign " ")
+(setq git-gutter:deleted-sign " ")
+(set-face-background 'git-gutter:modified "#B4CDE1")
+(set-face-foreground 'git-gutter:modified "#B4CDE1")
+(set-face-background 'git-gutter:added "#90ee90")
+(set-face-foreground 'git-gutter:added "#90ee90")
+(set-face-background 'git-gutter:deleted "#fa8072")
+(set-face-foreground 'git-gutter:deleted "#fa8072")
+(setq git-gutter:unchanged-sign nil)
+(set-face-background 'git-gutter:unchanged nil)
 
-;; Update the emacs path
-(setq exec-path (append (parse-colon-path (getenv "PATH"))
-                        (list exec-directory)))
+;; Do not show line numbers
+(global-linum-mode 0)
 
-;;merlin
-(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
-(add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
-(require 'merlin)
+;; Cursor as single bar
+(setq-default cursor-type '(bar . 1))
 
-;; Update the emacs load path
-(add-to-list 'load-path (expand-file-name "../../share/emacs/site-lisp"
-                                          (getenv "OCAML_TOPLEVEL_PATH")))
-
-(setq auto-mode-alist
-      (append '(("\\.ml[ily]?$" . tuareg-mode)
-                ("\\.topml$" . tuareg-mode))
-              auto-mode-alist)) 
-(add-hook 'tuareg-mode-hook 'utop-minor-mode)
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-
-(autoload 'merlin-mode "merlin" "Merlin mode" t)
-(setq merlin-use-auto-complete-mode t)
-(setq merlin-error-after-save nil)
-(add-hook 'caml-mode-hook 'merlin-mode)
-
-(autoload 'utop "utop" "Toplevel for OCaml" t)
-(autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
+;; Show column number in bottom line
+(setq column-number-mode t)
