@@ -1,3 +1,10 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (load-file "~/.emacs.d/packages.el")
 
 (setq ring-bell-function 'ignore)
@@ -59,7 +66,7 @@
 (setq-default neo-smart-open t)
 (setq-default neo-theme 'arrow)
 
-(load-file "~/.emacs.d/ocaml.el")
+;; (load-file "~/.emacs.d/ocaml.el")	
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -85,7 +92,7 @@
 (global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
 (global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
 
-(global-set-key (kbd "s-<return>") 'utop-eval-region)
+;; (global-set-key (kbd "s-<return>") 'utop-eval-region) 
 (global-set-key [f8] 'merlin-error-check)
 (global-set-key [f11] 'git-gutter:popup-diff)
 (global-set-key (kbd "C-<f11>") 'vc-diff)
@@ -100,8 +107,22 @@
 (set-face-foreground 'default "#1a1a1a")
 ;; (set-face-attribute 'mode-line nil :height 120) 
 (set-face-attribute 'vertical-border nil :foreground "grey")
+;; (set-face-foreground 'font-lock-string-face "#ff5d00") 
+(set-face-foreground 'font-lock-comment-face "#838383")
+(set-face-foreground 'font-lock-keyword-face "#OOOOO")
+(set-face-bold-p 'font-lock-comment-face t)
+
+;; (face-bold-p 'font-lock-comment-face)	
+(face-bold-p 'font-lock-keyword-face t)
+
+;; (set-face-attribute 'font-lock-keyword-face nil
+;;                     :weight 'extra-bold
+;;                     :underline "red")
+
+;; (face-attribute 'bold :weight)		
 
 (require 'git-gutter)
+
 (global-git-gutter-mode +1)
 (setq git-gutter:always-show-gutter t)
 (setq git-gutter:update-threshold 2)
