@@ -1,20 +1,15 @@
-; (require 'package)
+(require 'package)
+
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
 (package-initialize)
-(setq package-archives '(
-			 ("gnu" . "http://elpa.gnu.org/packages/") 
-                         ;; ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")
-			 ))
 
-;; (unless (package-installed-p 'cider)
-;;   (package-install 'cider))
+(package-refresh-contents)
 
-(setq packages '(s
-                 git-gutter
-        		 neotree
-		 
-                 ))
-; (dolist (package packages)
-;   (unless (package-installed-p package)
-;     (package-install package)))
+(setq packages '(cider
+                git-gutter))
 
+(dolist (package packages)
+  (unless (package-installed-p package)
+    (package-install package)))
