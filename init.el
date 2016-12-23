@@ -18,8 +18,72 @@
   (interactive)
   (switch-to-buffer (generate-new-buffer "new-buffer")))
 
+(defun duplicate-line ()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (newline)
+  (yank))
 
+(defun next-user-buffer ()
+  (interactive)
+  (next-buffer)
+  (let ((i 0))
+    (while (and (string-match "^*" (buffer-name)) (< i 50))
+      (setq i (1+ i)) (next-buffer) )))
+
+(defun previous-user-buffer ()
+  (interactive)
+  (previous-buffer)
+  (let ((i 0))
+    (while (and (string-match "^*" (buffer-name)) (< i 50))
+      (setq i (1+ i)) (previous-buffer))))
+
+
+;;;;;;;;;;;;;
+;; Clojure ;;
+;;;;;;;;;;;;;
 (require 'cider)
+
+
+;;;;;;;;;;;;;;;;
+;; Git Gutter ;;
+;;;;;;;;;;;;;;;;
+(require 'git-gutter)
+(global-git-gutter-mode +1)
+(setq git-gutter:always-show-gutter t)
+(setq git-gutter:update-threshold 2)
+(setq git-gutter:update-hooks '(after-save-hook after-revert-hook))
+(setq git-gutter:modified-sign " ")
+(setq git-gutter:added-sign " ")
+(setq git-gutter:deleted-sign " ")
+(set-face-background 'git-gutter:modified "#B4CDE1")
+(set-face-foreground 'git-gutter:modified "#B4CDE1")
+(set-face-background 'git-gutter:added "#9AD39A")
+(set-face-foreground 'git-gutter:added "#9AD39A")
+(set-face-background 'git-gutter:deleted "#F7A59C")
+(set-face-foreground 'git-gutter:deleted "#F7A59C")
+(setq git-gutter:unchanged-sign nil)
+(set-face-background 'git-gutter:unchanged nil)
+
+
+;;;;;;;;;;;;;
+;; Neotree ;;
+;;;;;;;;;;;;;
+(require 'neotree)
+(setq-default neo-smart-open t)
+(setq-default neo-theme 'arrow)
+
+;; (defun neotree-peek ()
+;;   (interactive)
+;;   (neotree-enter)
+;;   (neotree-hide))
+;; (add-hook
+;;  'neotree-mode-hook
+;;  (lambda ()
+;;    (define-key neotree-mode-map (kbd "TAB") 'neotree-peek)))
+
 
 ;;;;;;;;;;;;;;;
 ;; Shortcuts ;;
@@ -35,14 +99,23 @@
 (global-set-key (kbd "s-<left>") 'move-beginning-of-line)
 (global-set-key (kbd "s-<right>") 'move-end-of-line)
 
-;; (global-set-key (kbd "s-1") 'neotree-toggle) 
-(global-set-key (kbd "s-e") 'buffer-menu)
+(global-set-key (kbd "s-1") 'neotree-toggle)
+(global-set-key (kbd "s-e") 'ibuffer)
 (global-set-key (kbd "C-<tab>") 'other-window)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 (global-set-key (kbd "s-o") 'find-file)
 (global-set-key (kbd "s-n") 'new-buffer)
 (global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
 (global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
+(global-set-key (kbd "M-<f1>") 'clojure-view-cheatsheet)
+(global-set-key (kbd "C-d") 'duplicate-line)
+(global-set-key (kbd "M-s-<left>") 'previous-user-buffer)
+(global-set-key (kbd "M-s-<right>") 'next-user-buffer)
+(global-set-key (kbd "<f11>") 'git-gutter:popup-diff)
+(global-set-key (kbd "C-<f11>") 'git-gutter:revert-hunk)
+(global-set-key (kbd "<f12>") 'git-gutter)
+(global-set-key (kbd "C-<f12>") 'vc-diff)
+(global-set-key (kbd "M-<f12>") 'vc-dir)
 
 
 ;;;;;;;;;;;;;;;
@@ -83,27 +156,6 @@
 ;;;;;;;;;;;;;;;
 ;; Show column number in bottom line
 (setq column-number-mode t)
-
-
-;;;;;;;;;;;;;;;;
-;; Git Gutter ;;
-;;;;;;;;;;;;;;;;
-(require 'git-gutter)
-(global-git-gutter-mode +1)
-(setq git-gutter:always-show-gutter t)
-(setq git-gutter:update-threshold 2)
-(setq git-gutter:update-hooks '(after-save-hook after-revert-hook))
-(setq git-gutter:modified-sign " ")
-(setq git-gutter:added-sign " ")
-(setq git-gutter:deleted-sign " ")
-(set-face-background 'git-gutter:modified "#B4CDE1")
-(set-face-foreground 'git-gutter:modified "#B4CDE1")
-(set-face-background 'git-gutter:added "#9AD39A")
-(set-face-foreground 'git-gutter:added "#9AD39A")
-(set-face-background 'git-gutter:deleted "#F7A59C")
-(set-face-foreground 'git-gutter:deleted "#F7A59C")
-(setq git-gutter:unchanged-sign nil)
-(set-face-background 'git-gutter:unchanged nil)
 
 
 ;;;;;;;;;;;;;;;;;;;

@@ -9,7 +9,8 @@
 
 (setq packages '(cider
 		 git-gutter
-		 exec-path-from-shell))
+		 exec-path-from-shell
+		 neotree))
 
 (dolist (package packages)
   (unless (package-installed-p package)
