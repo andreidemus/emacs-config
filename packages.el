@@ -8,7 +8,8 @@
 (package-refresh-contents)
 
 (setq packages '(cider
-                git-gutter))
+		 git-gutter
+		 exec-path-from-shell))
 
 (dolist (package packages)
   (unless (package-installed-p package)

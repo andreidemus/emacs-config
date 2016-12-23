@@ -19,10 +19,12 @@
   (switch-to-buffer (generate-new-buffer "new-buffer")))
 
 
+(require 'cider)
+
 ;;;;;;;;;;;;;;;
 ;; Shortcuts ;;
 ;;;;;;;;;;;;;;;
-(global-set-key (kbd "s-<return>") 'eval-last-sexp)
+(global-set-key (kbd "s-<return>") 'cider-eval-last-sexp)
 
 (global-set-key (kbd "M-<up>") 'scroll-up-line)
 (global-set-key (kbd "M-<down>") 'scroll-down-line)
@@ -118,5 +120,21 @@
 ;; No annoying beeps
 (setq ring-bell-function 'ignore)
 
+;; fix the PATH variable
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Terminal-Coding.html
 ;;(set-keyboard-coding-system nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (exec-path-from-shell git-gutter cider))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
