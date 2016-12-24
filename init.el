@@ -75,6 +75,11 @@
 (setq-default neo-smart-open t)         
 (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
+(defun neo-open-file (full-path &optional arg)
+  (neo-global--select-mru-window arg)
+  (find-file full-path)
+  (neotree-hide)) ;; hide when file selected
+
 
 ;;;;;;;;;;;;;;;
 ;; Shortcuts ;;
@@ -90,8 +95,7 @@
 (global-set-key (kbd "s-<left>") 'move-beginning-of-line)
 (global-set-key (kbd "s-<right>") 'move-end-of-line)
 
-(global-set-key (kbd "s-1") 'neotree-show)
-(global-set-key (kbd "s-2") 'neotree-hide)
+(global-set-key (kbd "s-1") 'neotree-toggle)
 (global-set-key (kbd "s-e") 'ibuffer)
 (global-set-key (kbd "C-<tab>") 'other-window)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
