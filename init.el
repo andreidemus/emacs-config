@@ -9,7 +9,7 @@
 (package-initialize)
 
 (load-file "~/.emacs.d/packages.el")
-
+(require 'all-the-icons)
 
 ;;;;;;;;;;;;;
 ;; Helpers ;;
@@ -72,17 +72,8 @@
 ;; Neotree ;;
 ;;;;;;;;;;;;;
 (require 'neotree)
-(setq-default neo-smart-open t)
-(setq-default neo-theme 'arrow)
-
-;; (defun neotree-peek ()
-;;   (interactive)
-;;   (neotree-enter)
-;;   (neotree-hide))
-;; (add-hook
-;;  'neotree-mode-hook
-;;  (lambda ()
-;;    (define-key neotree-mode-map (kbd "TAB") 'neotree-peek)))
+(setq-default neo-smart-open t)         
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 
 
 ;;;;;;;;;;;;;;;
@@ -99,7 +90,8 @@
 (global-set-key (kbd "s-<left>") 'move-beginning-of-line)
 (global-set-key (kbd "s-<right>") 'move-end-of-line)
 
-(global-set-key (kbd "s-1") 'neotree-toggle)
+(global-set-key (kbd "s-1") 'neotree-show)
+(global-set-key (kbd "s-2") 'neotree-hide)
 (global-set-key (kbd "s-e") 'ibuffer)
 (global-set-key (kbd "C-<tab>") 'other-window)
 (global-set-key (kbd "s-w") 'kill-this-buffer)
@@ -168,6 +160,7 @@
 
 (electric-pair-mode 1)
 (show-paren-mode 1)
+(setq-default indent-tabs-mode nil)
 
 ;; No annoying beeps
 (setq ring-bell-function 'ignore)
