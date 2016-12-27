@@ -112,6 +112,9 @@
 (global-set-key (kbd "<f12>") 'git-gutter)
 (global-set-key (kbd "C-<f12>") 'vc-diff)
 (global-set-key (kbd "M-<f12>") 'vc-dir)
+(global-set-key (kbd "s-r") 'replace-string)
+(global-set-key (kbd "s-z") 'undo-tree-undo)
+(global-set-key (kbd "s-Z") 'undo-tree-redo)
 
 
 ;;;;;;;;;;;;;;;
@@ -172,6 +175,9 @@
 ;; fix the PATH variable
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+;; undo-redo
+(global-undo-tree-mode)
 
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Terminal-Coding.html
 ;;(set-keyboard-coding-system nil)

@@ -1,3 +1,4 @@
+
 (require 'package)
 
 ;; (add-to-list 'package-archives
@@ -14,7 +15,8 @@
                  git-gutter
                  exec-path-from-shell
                  neotree
-                 all-the-icons))
+                 all-the-icons
+                 undo-tree))
 
 (dolist (package packages)
   (unless (package-installed-p package)
