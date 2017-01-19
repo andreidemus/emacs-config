@@ -16,7 +16,8 @@
                  exec-path-from-shell
                  neotree
                  all-the-icons
-                 undo-tree))
+                 undo-tree
+                 rainbow-mode))
 
 (dolist (package packages)
   (unless (package-installed-p package)

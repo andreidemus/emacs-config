@@ -179,6 +179,9 @@
 ;; undo-redo
 (global-undo-tree-mode)
 
+;; Colorize color codes
+(rainbow-mode)
+
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Terminal-Coding.html
 ;;(set-keyboard-coding-system nil)
 (custom-set-variables
