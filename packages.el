@@ -1,24 +1,21 @@
-
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3") ; should be fixed in 26.3+
 (require 'package)
 
-;; (add-to-list 'package-archives
-;;              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(setq package-list '(cider
+                     git-gutter
+                     exec-path-from-shell
+                     all-the-icons
+                     sesman
+                     neotree
+                     undo-tree))
 
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
 (package-refresh-contents)
 
-(setq packages '(cider
-                 git-gutter
-                 exec-path-from-shell
-                 neotree
-                 all-the-icons
-                 undo-tree
-                 rainbow-mode))
-
-(dolist (package packages)
+(dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))

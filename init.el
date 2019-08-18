@@ -67,6 +67,12 @@
 (setq git-gutter:unchanged-sign nil)
 (set-face-background 'git-gutter:unchanged nil)
 
+;;;;;;;;;;;;;;;
+;; undo-redo ;;
+;;;;;;;;;;;;;;;
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 
 ;;;;;;;;;;;;;
 ;; Neotree ;;
@@ -101,8 +107,8 @@
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 (global-set-key (kbd "s-o") 'find-file)
 (global-set-key (kbd "s-n") 'new-buffer)
-(global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 20)))
-(global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 20)))
+(global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 50)))
+(global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 50)))
 (global-set-key (kbd "M-<f1>") 'clojure-view-cheatsheet)
 (global-set-key (kbd "C-d") 'duplicate-line)
 (global-set-key (kbd "M-s-<left>") 'previous-user-buffer)
@@ -113,6 +119,9 @@
 (global-set-key (kbd "C-<f12>") 'vc-diff)
 (global-set-key (kbd "M-<f12>") 'vc-dir)
 (global-set-key (kbd "s-r") 'replace-string)
+;; (global-set-key (kbd "M-s-r") 'eval-last-sexp) ; todo debug and fix this
+
+
 (global-set-key (kbd "s-z") 'undo-tree-undo)
 (global-set-key (kbd "s-Z") 'undo-tree-redo)
 
@@ -127,15 +136,22 @@
 (setq-default cursor-type '(bar . 2)) ;; cursor as thin bar
 ;; Disable scroll bar
 (scroll-bar-mode -1)
-;; Do not show line numbers
+;; Do not show line numbers (default approach)
 (global-linum-mode 0)
+(display-line-numbers-mode 1)           ; todo check why it doesn't work on load
 ;; Disable toolbar
 (tool-bar-mode -1)
 ;; Vertical border style
 (set-face-attribute 'vertical-border nil :foreground "grey")
 ;; Mode line style
-(set-face-attribute 'mode-line nil :box nil)
+(set-face-attribute 'mode-line nil :box '(:line-width 2 :color "#AEB6BF" :style nil))
+(set-face-attribute 'mode-line nil :background "#AEB6BF")
 (set-face-attribute 'mode-line nil :height 120)
+(set-face-attribute 'mode-line-inactive nil :box '(:line-width 2 :color "#E5E7E9" :style nil))
+(set-face-attribute 'mode-line-inactive nil :background "#E5E7E9")
+(set-face-attribute 'mode-line nil :height 120)
+;; Set default window size
+(setq default-frame-alist '((width . 200) (fullscreen . fullheight))) ; fix it for emacs, started from console
 
 
 ;;;;;;;;;;;;;;;;;
@@ -148,7 +164,7 @@
 (set-face-foreground 'font-lock-comment-face "#888888")
 (set-face-foreground 'font-lock-function-name-face "#101010")
 (set-face-foreground 'font-lock-keyword-face "#000080")
-
+(set-face-background 'show-paren-match "#85C1E9")
 
 ;;;;;;;;;;;;;;;
 ;; Mode line ;;
@@ -176,20 +192,21 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-;; undo-redo
-(global-undo-tree-mode)
-
-;; Colorize color codes
-(rainbow-mode)
-
 ;;https://www.gnu.org/software/emacs/manual/html_node/emacs/Terminal-Coding.html
 ;;(set-keyboard-coding-system nil)
+
+
+(server-start)                          ; todo do it on OS startup
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (exec-path-from-shell git-gutter cider))))
+ '(package-selected-packages
+   (quote
+    (undo-tree neotree all-the-icons exec-path-from-shell git-gutter cider sesman))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
