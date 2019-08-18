@@ -7,7 +7,9 @@
                      all-the-icons
                      sesman
                      neotree
-                     undo-tree))
+                     undo-tree
+                     magit
+                     expand-region))
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))

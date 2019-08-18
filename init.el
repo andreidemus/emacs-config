@@ -87,13 +87,19 @@
   (neotree-hide)) ;; hide when file selected
 
 
+;;;;;;;;;;;;;;;;;;;;;;
+;; Region expansion ;;
+;;;;;;;;;;;;;;;;;;;;;;
+(require 'expand-region)
+
+
 ;;;;;;;;;;;;;;;
 ;; Shortcuts ;;
 ;;;;;;;;;;;;;;;
 (global-set-key (kbd "s-<return>") 'cider-eval-last-sexp)
 
-(global-set-key (kbd "M-<up>") 'scroll-up-line)
-(global-set-key (kbd "M-<down>") 'scroll-down-line)
+(global-set-key (kbd "M-<up>") 'er/expand-region)
+(global-set-key (kbd "M-<down>") 'er/contract-region)
 (global-set-key (kbd "C-;") 'comment-dwim)
 (global-set-key (kbd "C-/") 'comment-dwim)
 (global-set-key (kbd "s-/") 'comment-dwim)
@@ -107,8 +113,8 @@
 (global-set-key (kbd "s-w") 'kill-this-buffer)
 (global-set-key (kbd "s-o") 'find-file)
 (global-set-key (kbd "s-n") 'new-buffer)
-(global-set-key (kbd "s-<up>") (lambda () (interactive) (scroll-down 50)))
-(global-set-key (kbd "s-<down>") (lambda () (interactive) (scroll-up 50)))
+(global-set-key (kbd "s-<up>") (lambda () (interactive) (goto-line 1)))
+(global-set-key (kbd "s-<down>") (lambda () (interactive) (end-of-buffer)))
 (global-set-key (kbd "M-<f1>") 'clojure-view-cheatsheet)
 (global-set-key (kbd "C-d") 'duplicate-line)
 (global-set-key (kbd "M-s-<left>") 'previous-user-buffer)
@@ -206,7 +212,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (undo-tree neotree all-the-icons exec-path-from-shell git-gutter cider sesman))))
+    (magit undo-tree neotree all-the-icons exec-path-from-shell git-gutter cider sesman expand-region))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
