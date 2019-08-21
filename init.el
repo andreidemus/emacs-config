@@ -45,6 +45,8 @@
 ;; Clojure ;;
 ;;;;;;;;;;;;;
 (require 'cider)
+(setq cider-jdk-src-paths '("/Users/andrei/java/src/clojure-1.10.0-sources"
+                            "/Users/andrei/java/src/java-11"))
 
 
 ;;;;;;;;;;;;;;;;
@@ -86,6 +88,9 @@
   (find-file full-path)
   (neotree-hide)) ;; hide when file selected
 
+(setq neo-window-fixed-size 1)
+(setq neo-window-width 45)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Region expansion ;;
@@ -125,9 +130,13 @@
 (global-set-key (kbd "C-<f12>") 'vc-diff)
 (global-set-key (kbd "M-<f12>") 'vc-dir)
 (global-set-key (kbd "s-r") 'replace-string)
-;; (global-set-key (kbd "M-s-r") 'eval-last-sexp) ; todo debug and fix this
-
-
+(global-set-key (kbd "M-s-<return>") 'cider-eval-last-sexp-to-repl)
+(global-set-key (kbd "C-s-<268632070>") 'isearch-forward-symbol-at-point)
+(global-set-key (kbd "M-s-ƒ") (lambda ()
+                                (interactive)
+                                (setq isearch-string "")
+                                (setq isearch-message "")
+                                (isearch-yank-x-selection)))
 (global-set-key (kbd "s-z") 'undo-tree-undo)
 (global-set-key (kbd "s-Z") 'undo-tree-redo)
 
