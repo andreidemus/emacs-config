@@ -97,6 +97,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 (require 'expand-region)
 
+;;;;;;;;;;;;;;
+;;Projectile;;
+;;;;;;;;;;;;;;
+(require 'projectile)
+(projectile-mode +1)
 
 ;;;;;;;;;;;;;;;
 ;; Shortcuts ;;
@@ -121,7 +126,7 @@
 (global-set-key (kbd "s-<up>") (lambda () (interactive) (goto-line 1)))
 (global-set-key (kbd "s-<down>") (lambda () (interactive) (end-of-buffer)))
 (global-set-key (kbd "M-<f1>") 'clojure-view-cheatsheet)
-(global-set-key (kbd "C-d") 'duplicate-line)
+(global-set-key (kbd "M-s-∂") 'duplicate-line)
 (global-set-key (kbd "M-s-<left>") 'previous-user-buffer)
 (global-set-key (kbd "M-s-<right>") 'next-user-buffer)
 (global-set-key (kbd "<f11>") 'git-gutter:popup-diff)
@@ -139,6 +144,9 @@
                                 (isearch-yank-x-selection)))
 (global-set-key (kbd "s-z") 'undo-tree-undo)
 (global-set-key (kbd "s-Z") 'undo-tree-redo)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+
 
 
 ;;;;;;;;;;;;;;;
@@ -173,7 +181,7 @@
 ;; Color Theme ;;
 ;;;;;;;;;;;;;;;;;
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Faces-for-Font-Lock.html
-(set-face-background 'default "#F0F0F0")
+(set-face-background 'default "#FAFAFA")
 (set-face-foreground 'default "#101010")
 (set-face-foreground 'font-lock-string-face "#008000")
 (set-face-foreground 'font-lock-comment-face "#888888")

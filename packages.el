@@ -9,7 +9,8 @@
                      neotree
                      undo-tree
                      magit
-                     expand-region))
+                     expand-region
+                     projectile))
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")))
